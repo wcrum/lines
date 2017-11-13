@@ -38,11 +38,13 @@ class Dots:
 		}
 
 	# mainly for clear code
-	def display_all(self):
+	def update(self):
 		self.display_lines()
 		self.display_dots()
 		self.update_dots()
 		self.display_text()
+
+		self.display_size = self.display.get_size()
 
 	# displays text
 	def display_text(self):
@@ -61,8 +63,8 @@ class Dots:
 		if self.shape == 1:
 			count = 0
 			while count < rand_num:
-				x, y = randint(0, 600), randint(0, 600)
-				dist = sqrt(fabs(x - 300) ** 2 + fabs(y - 300) ** 2)
+				x, y = randint(0, self.display_size[0]), randint(0, self.display_size[1])
+				dist = sqrt(fabs(x - (self.display_size[0] / 2)) ** 2 + fabs(y - (self.display_size[1] / 2)) ** 2)
 
 				if dist < 250:
 					tmp.append([x, y])
@@ -70,7 +72,8 @@ class Dots:
 
 		elif self.shape == 2:
 			for x in range(rand_num):
-				tmp.append([randint(100, 500), randint(100, 500)])
+				x, y = self.display_size[0], self.display_size[1]
+				tmp.append([randint(x, y), randint(x, y)])
 
 		else:
 			for x in range(rand_num):
@@ -165,7 +168,7 @@ while True:
 		else: handle_event(event)
 	# main tasks
 	display.blit(background, (0,0))
-	dots.display_all()
+	dots.update()
 
 	pygame.display.flip()
 	clock.tick()
