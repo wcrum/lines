@@ -108,6 +108,56 @@ class Dots:
 # calling Dots constructor
 dots = Dots(display)
 
+def handle_event(event):
+	if event.type == pygame.MOUSEBUTTONDOWN:
+		dots.coords.append(list(pygame.mouse.get_pos()))
+
+	if event.type == pygame.KEYDOWN:
+		if event.key == pygame.K_UP:
+			dots.range += 10
+
+		elif event.key == pygame.K_DOWN:
+			dots.range -= 10
+
+		elif event.key == pygame.K_LEFT:
+			dots.range -= 1
+
+		elif event.key == pygame.K_RIGHT:
+			dots.range += 1
+
+		elif event.key == pygame.K_SPACE:
+			dots.new_dots()
+
+		elif event.key == pygame.K_c:
+			dots.color_num += 1
+
+		elif event.key == pygame.K_q:
+			pygame.quit()
+			sys.exit()
+
+		elif event.key == pygame.K_p:
+			if dots.jitter == (-1, 1): dots.jitter = (0, 0)
+			else: dots.jitter = (-1, 1)
+
+		elif event.key == pygame.K_s:
+			dots.shape += 1
+
+			if dots.shape > 2: dots.shape = 0
+
+			dots.new_dots()
+
+		elif event.key == pygame.K_DELETE:
+			dots.coords = [ [0, 0] ]
+
+		elif event.key == pygame.K_i:
+			if dots.range == float('inf'): dots.range = randint(30, 90)
+			else: dots.range = float('inf')
+
+
+		# reset values, handling overflow errors
+		if dots.color_num > 7: dots.color_num = 1
+		if dots.range < 0: dots.range = 0
+
 while True:
 	for event in pygame.event.get():
 
@@ -115,56 +165,8 @@ while True:
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
-
-		elif event.type == pygame.MOUSEBUTTONDOWN:
-			dots.coords.append(list(pygame.mouse.get_pos()))
-
-		elif event.type == pygame.KEYDOWN:
-			if event.key == pygame.K_UP:
-				dots.range += 10
-
-			elif event.key == pygame.K_DOWN:
-				dots.range -= 10
-
-			elif event.key == pygame.K_LEFT:
-				dots.range -= 1
-
-			elif event.key == pygame.K_RIGHT:
-				dots.range += 1
-
-			elif event.key == pygame.K_SPACE:
-				dots.new_dots()
-
-			elif event.key == pygame.K_c:
-				dots.color_num += 1
-
-			elif event.key == pygame.K_q:
-				pygame.quit()
-				sys.exit()
-
-			elif event.key == pygame.K_p:
-				if dots.jitter == (-1, 1): dots.jitter = (0, 0)
-				else: dots.jitter = (-1, 1)
-
-			elif event.key == pygame.K_s:
-				dots.shape += 1
-
-				if dots.shape > 2: dots.shape = 0
-
-				dots.new_dots()
-
-			elif event.key == pygame.K_DELETE:
-				dots.coords = [ [0, 0] ]
-
-			elif event.key == pygame.K_i:
-				if dots.range == float('inf'): dots.range = randint(30, 90)
-				else: dots.range = float('inf')
-
-
-			# reset values, handling overflow errors
-			if dots.color_num > 7: dots.color_num = 1
-			if dots.range < 0: dots.range = 0
-
+		else:
+			handle_event(event)
 	# main tasks
 	display.blit(background, (0,0))
 	dots.display_all()
