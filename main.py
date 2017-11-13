@@ -105,9 +105,6 @@ class Dots:
 			self.coords[x][0] += randint(self.jitter[0], self.jitter[1])
 			self.coords[x][1] += randint(self.jitter[0], self.jitter[1])
 
-# calling Dots constructor
-dots = Dots(display)
-
 def handle_event(event):
 	if event.type == pygame.MOUSEBUTTONDOWN:
 		dots.coords.append(list(pygame.mouse.get_pos()))
@@ -158,6 +155,9 @@ def handle_event(event):
 		if dots.color_num > 7: dots.color_num = 1
 		if dots.range < 0: dots.range = 0
 
+# calling Dots constructor
+dots = Dots(display)
+
 while True:
 	for event in pygame.event.get():
 
@@ -165,6 +165,7 @@ while True:
 		if event.type == pygame.QUIT:
 			pygame.quit()
 			sys.exit()
+
 		else:
 			handle_event(event)
 	# main tasks
