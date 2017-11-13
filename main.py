@@ -25,28 +25,16 @@ class Dots:
 		self.shape = 0
 		self.new_dots()
 		self.jitter = (-1, 1)
-
-		# todo, possibly make cleaner
-		self.color_value = {
-			1:(255, 0, 0),
-			2:(0, 255, 0),
-			3:(0, 0, 255),
-			4:(255, 255, 255),
-			5:(125, 125, 125),
-			7:(0, 0, 0)
-		}
-		self.color_names = ['Red', 'Green', 'Blue', 'White', 'Gray', 'Random', 'None']
-		self.color_num = 1
-
+		self.color_index = 1
 		self.color_master = {
 			1: {'val' : (255, 0, 0), 'name' : 'Red'},
 			2: {'val' : (0, 255, 0), 'name' : 'Green'},
 			3: {'val' : (0, 0, 255), 'name' : 'Blue'},
 			4: {'val' : (255, 255, 255), 'name' : 'White'},
 			5: {'val' : (125, 125, 125), 'name' : 'Gray'},
+			6: {'val' : 'rand', 'name' : 'Random'},
 			7: {'val' : (0, 0, 0), 'name' : 'None'}
 		}
-
 
 	# mainly for clear code
 	def display_all(self):
@@ -60,7 +48,7 @@ class Dots:
 	def display_text(self):
 		range_text = font.render('Range : {}'.format(self.range), True, (255, 255, 255))
 		self.display.blit(range_text, (10, 10))
-		color_text = font.render('Color : {}'.format(self.color_names[self.color_num - 1]), True, (255, 255, 255))
+		color_text = font.render('Color : {}'.format(self.color_master[self.color_index]['name']), True, (255, 255, 255))
 		self.display.blit(color_text, (510, 582))
 
 	# clears self.coords and make a new list of random coords
@@ -96,8 +84,8 @@ class Dots:
 
 	# either returns solid color, or random color
 	def get_color(self):
-		if self.color_num == 6: return (randint(0,255), randint(0, 255), randint(0, 255))
-		return self.color_value[self.color_num]
+		if self.color_index == 6: return (randint(0,255), randint(0, 255), randint(0, 255))
+		return self.color_master[self.color_index]['val']
 
 	# displays lines
 	# if sqrt( |x1 + x2^2| + |y1 - y2 ^2| ) < range: draw line
@@ -136,7 +124,7 @@ def handle_event(event):
 			dots.new_dots()
 
 		elif event.key == pygame.K_c:
-			dots.color_num += 1
+			dots.color_index += 1
 
 		elif event.key == pygame.K_q:
 			pygame.quit()
@@ -148,9 +136,7 @@ def handle_event(event):
 
 		elif event.key == pygame.K_s:
 			dots.shape += 1
-
 			if dots.shape > 2: dots.shape = 0
-
 			dots.new_dots()
 
 		elif event.key == pygame.K_DELETE:
@@ -162,7 +148,7 @@ def handle_event(event):
 
 
 		# reset values, handling overflow errors
-		if dots.color_num > 7: dots.color_num = 1
+		if dots.color_index > 7: dots.color_index = 1
 		if dots.range < 0: dots.range = 0
 
 # calling Dots constructor
