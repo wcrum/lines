@@ -25,6 +25,7 @@ class Dots:
 		self.shape = 0
 		self.new_dots()
 		self.jitter = (-1, 1)
+
 		self.color_index = 1
 		self.color_master = {
 			1: {'val' : (255, 0, 0), 'name' : 'Red'},
@@ -40,7 +41,6 @@ class Dots:
 	def display_all(self):
 		self.display_lines()
 		self.display_dots()
-
 		self.update_dots()
 		self.display_text()
 
@@ -139,7 +139,7 @@ def handle_event(event):
 			if dots.shape > 2: dots.shape = 0
 			dots.new_dots()
 
-		elif event.key == pygame.K_DELETE:
+		elif event.key == pygame.K_DELETE or event.key == pygame.K_BACKSPACE:
 			dots.coords = [ [0, 0] ]
 
 		elif event.key == pygame.K_i:
@@ -162,8 +162,7 @@ while True:
 			pygame.quit()
 			sys.exit()
 
-		else:
-			handle_event(event)
+		else: handle_event(event)
 	# main tasks
 	display.blit(background, (0,0))
 	dots.display_all()
