@@ -72,7 +72,7 @@ class Dots:
 
 		elif self.shape == 2:
 			for x in range(rand_num):
-				x, y = self.display_size[0], self.display_size[1]
+				x, y = 100, self.display_size[1] - 100
 				tmp.append([randint(x, y), randint(x, y)])
 
 		else:
