@@ -21,7 +21,6 @@ fps = 32
 class Dots:
 	def __init__(self, display):
 		self.display = display
-		self.name = font.render('Code and design by Elison Crum', True, (255, 255, 255))
 		self.display_size = display.get_size()
 		self.shape = 0
 		self.new_dots()
@@ -49,7 +48,6 @@ class Dots:
 
 	# displays text
 	def display_text(self):
-		self.display.blit(self.name, (5, 582))
 		range_text = font.render('Range : {}'.format(self.range), True, (255, 255, 255))
 		self.display.blit(range_text, (10, 10))
 		color_text = font.render('Color : {}'.format(self.color_names[self.color_num - 1]), True, (255, 255, 255))
