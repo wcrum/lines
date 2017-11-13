@@ -38,6 +38,16 @@ class Dots:
 		self.color_names = ['Red', 'Green', 'Blue', 'White', 'Gray', 'Random', 'None']
 		self.color_num = 1
 
+		self.color_master = {
+			1: {'val' : (255, 0, 0), 'name' : 'Red'},
+			2: {'val' : (0, 255, 0), 'name' : 'Green'},
+			3: {'val' : (0, 0, 255), 'name' : 'Blue'},
+			4: {'val' : (255, 255, 255), 'name' : 'White'},
+			5: {'val' : (125, 125, 125), 'name' : 'Gray'},
+			7: {'val' : (0, 0, 0), 'name' : 'None'}
+		}
+
+
 	# mainly for clear code
 	def display_all(self):
 		self.display_lines()
